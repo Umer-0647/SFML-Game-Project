@@ -260,7 +260,7 @@ char Board::getFieldInfo(int row, int col) const
 {
     if (row < 0 || row >= height || col < 0 || col >= width)
     {
-        return ' ';                                // Get information about a cell
+        return ' ';                                                                          // Get information about a cell
     }
 
     if (!board[row][col].isRevealed)
