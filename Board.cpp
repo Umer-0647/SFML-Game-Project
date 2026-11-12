@@ -201,4 +201,86 @@ void Board::reset()
     placeMinesRandomly();
 }
 
+
+void Board::placeMinesRandomly()                 //It place mines randomly
+
+{
+    revealedCount = 0;
+
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)           //It clears the entire board
+        {
+            board[i][j].hasMine = false;
+            board[i][j].hasFlag = false;
+            board[i][j].isRevealed = false;
+        }
+    }
+
+    int minesToPlace = 0;
+    int totalCells = width * height;
+
+    switch (gameMode)                              //It calculates total number of mines based on the selected difficulty level
+    {
+    case DEBUG:
+        minesToPlace = 10;
+        break;
+
+    case EASY:
+        minesToPlace = (totalCells * 10 + 50) / 100;            // roughly 10% of cells
+        break;
+
+    case NORMAL:
+        minesToPlace = (totalCells * 20 + 50) / 100;           // roughly 20% of cells
+        break;
+
+    case HARD:
+        minesToPlace = (totalCells * 30 + 50) / 100;            // roughly 30% of cells
+        break;
+    }
+
+    if (minesToPlace >= totalCells)                 //It never fills the whole board and keeps at least one safe cell
+    {
+        minesToPlace = totalCells - 1;
+    }
+
+    while (minesToPlace > 0)
+    {
+        int row = std::rand() % height;              //This Places mines at random positions
+        int col = std::rand() % width;               
+
+        if (!board[row][col].hasMine)              //This skips the cells that already hold a mine
+        {
+            board[row][col].hasMine = true;
+            minesToPlace--;
+        }
+    }
+}
+
+char Board::getFieldInfo(int row, int col) const
+{
+    if (row < 0 || row >= height || col < 0 || col >= width)
+    {
+        return ' ';                                // Get information about a cell
+    }
+
+    if (!board[row][col].isRevealed)
+    {
+        if (board[row][col].hasFlag)
+        {
+            return 'F';
+        }
+
+        return ' ';
+    }
+
+    if (board[row][col].hasMine)
+    {
+        return '*';
+    }
+
+    int mineCount = countMines(row, col);
+
+    return '0' + mineCount;
+}
               
