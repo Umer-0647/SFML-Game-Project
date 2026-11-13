@@ -18,6 +18,10 @@ RenderWindow gameWindow( // here Render Window is Class of SMFL in  which an obj
             {
                 gameWindow.close();
             }
+            if(event.type==Event::Closed&&event.key.code==Keyboard::Escape){
+                gameWindow.close();
+            }
+             
         }
         gameWindow.clear(Color::Black); // It is used to remove previous drawing and prpares for new frame.
         myLogo.display();// Here we are calling the obejct of logo class and calling the function of logo class.
