@@ -2,16 +2,12 @@
 #include"Board.h"
 #include<SFML/Graphics.hpp>
 #include"BoardView.h"
-using namespace sf;
+using namespace sf;			
 using namespace std;
 BoardView::BoardView(Board& board, RenderWindow& window) :board(board), window(window){}
 void BoardView::displayWon()
 {
-	Font font;
-	if (!font.loadFromFile("./assests/font.ttf")) {
-		cout<< "Font could not be loaded ";
-		return;
-	}
+	
 	Text t;
 	t.setFont(font);
 	t.setCharacterSize(36);
@@ -36,7 +32,7 @@ void BoardView::displayWon()
 	PressEnterText.setCharacterSize(14);
 	PressEnterText.setFillColor(Color::Red);
 	PressEnterText.setStyle(Text::Bold);
-	PressEnterText.setOrigin(PressEnterText.getLocalBounds().width/2,PressEnterText.getLocalBounds.height/2);
+	PressEnterText.setOrigin(PressEnterText.getLocalBounds().width/2,PressEnterText.getLocalBounds().height/2);
 	PressEnterText.setPosition(window.getSize().x/2,window.getSize().y/2+25);
 	window.draw(PressEnterText);
 }
@@ -66,7 +62,7 @@ void BoardView::displayLost(){
 	PressEnterText.setCharacterSize(14);
 	PressEnterText.setFillColor(Color::Red);
 	PressEnterText.setStyle(Text::Bold);
-	PressEnterText.setOrigin(PressEnterText.getLocalBounds().width/2,PressEnterText.getLocalBounds.height/2);
+	PressEnterText.setOrigin(PressEnterText.getLocalBounds().width/2,PressEnterText.getLocalBounds().height/2);
 	PressEnterText.setPosition(window.getSize().x/2,window.getSize().y/2+25);
 	window.draw(PressEnterText);
 
