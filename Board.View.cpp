@@ -71,3 +71,71 @@ void BoardView::displayLost(){
 	window.draw(PressEnterText);
 
 }
+void BoardView::displayBoard()//it draws every cell on the grid and then reads the mouse clicks
+{
+	int cellsize = 32;//size of one square on the board in pixels
+
+	sf::Texture tex;//an image will be loaded in memory
+	tex.loadFromFile("./assets/tiles.png");//it will load the strip of 12 pictures from the assets folder
+	sf::Sprite sprite(tex);//the object that is dawn on the window 
+
+	for (int row = 0; row < board.getHeight(); row++)//this nested loop will visit every cell of the grid
+	{
+		for (int col = 0; col < board.getWidth(); col++)
+		{
+			char f = board.getFieldInfo(row, col);//it asks the board to show which character for this cell and store it in f
+			int imageindex;//it will give the position of the picture inside the file tiles.png
+			if (f == '*')//if it is s mine
+			{
+				imageindex = 9;//store the picture number of mine in imageindex
+			}
+			else if (f == ' ')//if it is a covered cell
+			{
+				imageindex = 10;//store the picture number of covered tile in imageindex
+			}
+			else if (f == 'F')//if it is a flagged cell
+			{
+				imageindex = 11;//store the picture number of flagged cell in imageindex
+			}
+			else//it is a digit character from '0' to'8'
+			{
+				imageindex = f - '0';//subtract the ASCII value 48 from the character to turn it into a number from the range 0 to 8
+			}
+			sprite.setTextureRect(sf::IntRect(imageindex * cellsize, 0, cellsize, cellsize));//it shows only the required pictured 32x32 piece of strip based on imageindex
+			sprite.setPosition(col * cellsize, row * cellsize);//it places that picture on the window, traversing across the coloumn first and then down the row
+			window.draw(sprite);//it paints the sprite on the window
+		}
+	}
+
+
+	sf::Vector2i pos = sf::Mouse::getPosition(window);//it stores the mouses's position in pixels  from the windows top-left corner. The value is stored in pair that is why vector2i is used.
+	int col = pos.x / cellsize;//to get the coloumn under the mouse we divide the pixels by 32 to get the coloumn number
+	int row = pos.y / cellsize;//to get the row under the mouse we divide the pixels by 32 to get the row number
+
+	if (board.getGameState() == GameState::RUNNING) {//this check only reacts to clicks when the game is running
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))//if left button of mouse is clicked
+		{
+			board.revealField(row, col);//tells the board to reveal this cell
+			sf::sleep(sf::milliseconds(200));////a pause of 0.2 seconds so one click is not counted in many frames
+		}
+		else if (sf::Mouse::isButtonPressed(sf::Mouse::Right))//if right button of mouse is clicked
+		{
+			board.toggleFlag(row, col);//tells the board to place or remove a flag on this cell
+			sf::sleep(sf::milliseconds(200));//prevents the flag from being flipped several times
+		}
+	}
+}
+void BoardView::display()// it draws the board and then displays the win or lose message if the game has ended
+{
+	displayBoard();//first it draws the board so it is visible behind any message
+
+
+	if (board.getGameState() == GameState::WON)//if the player won
+	{
+		displayWon();//draw the won message on the board
+	}
+	else if (board.getGameState() == GameState::LOST)//if the player lost
+	{
+		displayLost();//draw the lost message on the board
+	}
+}
