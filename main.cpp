@@ -2,6 +2,7 @@
 #include "Logo.h" // logo header file which declare logo class.
 #include"Board.h"
 #include"BoardView.h"
+#include"Menu.h"
 using namespace sf;
 int main()
 {
@@ -13,6 +14,7 @@ RenderWindow gameWindow( // here Render Window is Class of SMFL in  which an obj
     Board board(10, 10, DEBUG); // This is the actual object of Board class.
     BoardView boardView(board, gameWindow);//This is the actual object of BoardView class.
     Logo myLogo(gameWindow); // It creates a logo object and call its constructor passing the existing windowgame by reference.
+    Menu menu; // It creates a Menu object and call its constructor.
     while (gameWindow.isOpen())
     {
      Event event; // this is a clas in which an object is created to check for user inputs.
