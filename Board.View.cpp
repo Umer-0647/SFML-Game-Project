@@ -4,9 +4,23 @@
 #include"BoardView.h"
 using namespace sf;			
 using namespace std;
-BoardView::BoardView(Board& board, RenderWindow& window) :board(board), window(window)
+BoardView::BoardView(Board& board, RenderWindow& window)
+	: board(board), window(window)
 {
-font.loadFromFile("./assets/font.ttf");	
+	font.loadFromFile("./assets/font.ttf");
+
+	// Load bomb explosion sound
+	if (!explosionBuffer.loadFromFile(
+		"C:/Users/Naveed/source/repos/Minesweeper C++ project/assets/minesweeper_explosion.wav"))
+	{
+		cout << "Sound file could not be loaded!" << endl;
+	}
+	else
+	{
+		cout << "Sound loaded successfully!" << endl;
+	}
+
+	explosionSound.setBuffer(explosionBuffer);
 }
 void BoardView::displayWon()
 {
