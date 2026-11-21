@@ -5,7 +5,7 @@ class Game//creating a class called Game
 {
 private:
 public: // everything under can be accessed outside this class
-     void initialize(); 
+   static  void initialize(); 
 };
 
 #endif // GAME_H
