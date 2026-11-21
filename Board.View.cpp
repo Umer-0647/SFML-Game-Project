@@ -4,7 +4,10 @@
 #include"BoardView.h"
 using namespace sf;			
 using namespace std;
-BoardView::BoardView(Board& board, RenderWindow& window) :board(board), window(window){}
+BoardView::BoardView(Board& board, RenderWindow& window) :board(board), window(window)
+{
+font.loadFromFile("./assets/font.ttf");	
+}
 void BoardView::displayWon()
 {
 	
@@ -19,9 +22,10 @@ void BoardView::displayWon()
 	window.draw(t);
 
 	if (Keyboard::isKeyPressed(Keyboard::Enter) || Keyboard::isKeyPressed(Keyboard::Escape)) {
-		if (board.getGameState() == RUNNING) {
-			board.setGameState(MAIN_MENU);
-		}
+		if (Keyboard::isKeyPressed(Keyboard::Enter))
+        {
+            board.setGameState(MAIN_MENU);
+        }
 		else if (board.getGameState() == MAIN_MENU) {
 			window.close();
 		}
