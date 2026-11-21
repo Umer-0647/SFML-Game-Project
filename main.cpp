@@ -4,6 +4,9 @@
 #include"BoardView.h"
 #include"Menu.h"
 using namespace sf;
+#include <iostream>
+#include "Game.h"
+
 int main()
 {
 RenderWindow gameWindow( // here Render Window is Class of SMFL in  which an object gameWindow is being created.
@@ -31,5 +34,7 @@ RenderWindow gameWindow( // here Render Window is Class of SMFL in  which an obj
         gameWindow.display(); // It is used to draw the complete render frame.
     }
 
+    Game game;
+    game.initialize();
     return 0;
 }
