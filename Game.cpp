@@ -15,11 +15,11 @@ void Game::initialize()
     sf::RenderWindow window(sf::VideoMode(800, 600), "Minesweeper", sf::Style::Close | sf::Style::Titlebar);//creating window used for the whole game
     window.setKeyRepeatEnabled(false);//if a key is held down, it counts as one press only
     window.setFramerateLimit(60);//the game draws 60 frames every second
-
+    Board Board(10,10,DEBUG);// This is the actual object of board class.
     MenuView menuView(menu, window);//draws the menu
-    BoardView boardView(board, window);//draws the board
-    Logo logo(window);//draws the logo
-
+    BoardView boardView(board, gameWindow);//draws the board.
+    Logo myLogo(gameWindow);//draws the logo
+    Menu menu; //It creates a menu object and call its constructor.
     while (window.isOpen())
     {
         sf::Event event;//check what the user did
@@ -39,7 +39,7 @@ void Game::initialize()
             window.setView(view);
 
             menuView.display();
-            logo.display();
+            myLogo.display();
 
             int option = menu.getSelectedOption();//player selects one of the menu options
 
