@@ -1,7 +1,8 @@
 #ifndef BOARDVIEW_H
 #define BOARDVIEW_H
 #include"Board.h"
-#include<"SFML/Graphics.hpp">
+#include<SFML/Audio.hpp>
+#include<SFML/Graphics.hpp>
 #include<iostream>
 using namespace sf;
 class BoardView
@@ -10,6 +11,8 @@ class BoardView
     Board &board;
     RenderWindow& window;
     Font font;
+    sf::SoundBuffer explosionBuffer;
+    sf::Sound explosionSound;
     void displayWon();
     void displayLost();
     void displayBoard();
