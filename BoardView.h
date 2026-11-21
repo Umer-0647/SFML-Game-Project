@@ -1,7 +1,7 @@
 #ifndef BOARDVIEW_H
 #define BOARDVIEW_H
 #include"Board.h"
-#include<"SFML/Graphics.cpp">
+#include<"SFML/Graphics.hpp">
 #include<iostream>
 using namespace sf;
 class boardView
