@@ -10,8 +10,8 @@ BoardView::BoardView(Board& board, RenderWindow& window)
 	font.loadFromFile("./assets/font.ttf");
 
 	// Load bomb explosion sound
-	if (!explosionBuffer.loadFromFile(
-		"C:/Users/Naveed/source/repos/Minesweeper C++ project/assets/minesweeper_explosion.wav"))
+	if (!explosionBuffer.loadFromFile(".assets/minesweeper_explosion.wav"))
+		
 	{
 		cout << "Sound file could not be loaded!" << endl;
 	}
@@ -98,6 +98,10 @@ void BoardView::displayBoard()//it draws every cell on the grid and then reads t
 		for (int col = 0; col < board.getWidth(); col++)
 		{
 			char f = board.getFieldInfo(row, col);//it asks the board to show which character for this cell and store it in f
+			if (board.getGameState() == GameState::LOST)
+{
+	explosionSound.play();
+}
 			int imageindex;//it will give the position of the picture inside the file tiles.png
 			if (f == '*')//if it is s mine
 			{
