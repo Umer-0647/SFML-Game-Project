@@ -2,14 +2,41 @@
 #include"Board.h"
 #include<SFML/Graphics.hpp>
 #include"BoardView.h"
+#include <fstream>  
+#include <string>
 using namespace sf;			
 using namespace std;
+void BoardView::loadMessages()
+{
+	ifstream file("./assets/messages.txt");
+	if (file.is_open())
+	{
+		cout << "File is opened " << endl;
+		getline(file, wonMessage);
+		getline(file, lostMessage);
+		getline(file, returnMessage);
+		file.close();
+		if (wonMessage.empty())      //Safety check messages.
+			wonMessage = "You Won!";
+		if (lostMessage.empty())
+			lostMessage = "You Lost!";
+		if (returnMessage.empty())
+			returnMessage = "Press Enter to return to the main menu";
+	}
+	else
+	{
+		cout << "Messages file could not be opened!" << endl;  // Safety check messages.
+		wonMessage = "You Won!";
+		lostMessage = "You Lost!";
+		returnMessage = "Press Enter to return to the main menu";
+	}
+}
 BoardView::BoardView(Board& board, RenderWindow& window)
 	: board(board), window(window)
 {
 	font.loadFromFile("./assets/font.ttf");//load the font once
 	tilesTexture.loadFromFile("./assets/tiles.png");//load the strip of 12 tile pictures once, instead of every frame
-
+	loadMessages(); // Function used for loading messages.
 	// Load bomb explosion sound (from the project's assets folder, so it works on every PC)
 	if (!explosionBuffer.loadFromFile("./assets/minesweeper_explosion.wav"))
 	{
@@ -24,65 +51,85 @@ BoardView::BoardView(Board& board, RenderWindow& window)
 }
 void BoardView::displayWon()
 {
-	
 	Text t;
 	t.setFont(font);
 	t.setCharacterSize(36);
-	t.setString("You Won!");
+	t.setString(wonMessage);
+
 	t.setFillColor(Color::Green);
 	t.setStyle(Text::Bold);
-	t.setOrigin(t.getLocalBounds().width / 2, t.getLocalBounds().height / 2);
-	t.setPosition(window.getSize().x / 2, window.getSize().y / 2);
+	t.setOrigin(t.getLocalBounds().width / 2,
+		t.getLocalBounds().height / 2);
+	t.setPosition(window.getSize().x / 2,
+		window.getSize().y / 2);
 	window.draw(t);
-
-	if (Keyboard::isKeyPressed(Keyboard::Enter))//Enter takes the player back to the main menu
+	if (Keyboard::isKeyPressed(Keyboard::Enter))
 	{
 		board.setGameState(MAIN_MENU);
 	}
-	else if (Keyboard::isKeyPressed(Keyboard::Escape))//Escape closes the game
+	else if (Keyboard::isKeyPressed(Keyboard::Escape))
 	{
 		window.close();
 	}
 	Text PressEnterText;
 	PressEnterText.setFont(font);
-	PressEnterText.setString("Press Enter to return to the main menu");
+	PressEnterText.setString(returnMessage);
 	PressEnterText.setCharacterSize(14);
 	PressEnterText.setFillColor(Color::Red);
 	PressEnterText.setStyle(Text::Bold);
-	PressEnterText.setOrigin(PressEnterText.getLocalBounds().width/2,PressEnterText.getLocalBounds().height/2);
-	PressEnterText.setPosition(window.getSize().x/2,window.getSize().y/2+25);
+	PressEnterText.setOrigin(
+		PressEnterText.getLocalBounds().width / 2,
+		PressEnterText.getLocalBounds().height / 2
+	);
+	PressEnterText.setPosition(
+		window.getSize().x / 2,
+		window.getSize().y / 2 + 25
+	);
+
 	window.draw(PressEnterText);
 }
-void BoardView::displayLost(){
-
+void BoardView::displayLost()
+{
 	Text l;
 	l.setFont(font);
 	l.setCharacterSize(36);
-	l.setString("You Lost!");
+	l.setString(lostMessage);
+
 	l.setFillColor(Color::Green);
 	l.setStyle(Text::Bold);
-	l.setOrigin(l.getLocalBounds().width / 2, l.getLocalBounds().height / 2);
-	l.setPosition(window.getSize().x / 2, window.getSize().y / 2);
+	l.setOrigin(l.getLocalBounds().width / 2,
+		l.getLocalBounds().height / 2);
+	l.setPosition(window.getSize().x / 2,
+		window.getSize().y / 2);
+
 	window.draw(l);
 
-	if (Keyboard::isKeyPressed(Keyboard::Enter))//Enter takes the player back to the main menu
+	if (Keyboard::isKeyPressed(Keyboard::Enter))
 	{
 		board.setGameState(MAIN_MENU);
 	}
-	else if (Keyboard::isKeyPressed(Keyboard::Escape))//Escape closes the game
+	else if (Keyboard::isKeyPressed(Keyboard::Escape))
 	{
 		window.close();
 	}
+
 	Text PressEnterText;
 	PressEnterText.setFont(font);
-	PressEnterText.setString("Press Enter to return to the main menu");
+	PressEnterText.setString(returnMessage);
+
 	PressEnterText.setCharacterSize(14);
 	PressEnterText.setFillColor(Color::Red);
 	PressEnterText.setStyle(Text::Bold);
-	PressEnterText.setOrigin(PressEnterText.getLocalBounds().width/2,PressEnterText.getLocalBounds().height/2);
-	PressEnterText.setPosition(window.getSize().x/2,window.getSize().y/2+25);
-	window.draw(PressEnterText);
+	PressEnterText.setOrigin(
+		PressEnterText.getLocalBounds().width / 2,
+		PressEnterText.getLocalBounds().height / 2
+	);
+	PressEnterText.setPosition(
+		window.getSize().x / 2,
+		window.getSize().y / 2 + 25
+	);
 
+	window.draw(PressEnterText);
 }
 void BoardView::displayBoard()//it draws every cell on the grid and then reads the mouse clicks
 {
