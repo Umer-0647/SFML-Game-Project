@@ -23,7 +23,6 @@ private:
     bool pressedPlayButton = false;
 public:
     Menu();
-    Menu(std::string options[], int size);
     std::vector<std::string> getOptions() const;
     int getSelectedOption() const;
     void setSelectedOption(int option);
