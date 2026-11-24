@@ -6,7 +6,7 @@ using namespace std;
 Logo::Logo(RenderWindow& GameWindow) :window(GameWindow)             // It is a class in which the constructor and variables are declared
 {
 	// The font is loaded ONE time here. Before, it was loaded inside display(), which runs 60 times every second.
-	fontLoaded = font.loadFromFile("C:/Windows/Fonts/Arial.ttf");    // First try the Windows Arial font.
+	fontLoaded = font.loadFromFile("C:/Windows/Fonts/Impact.ttf");    // First try the Windows Impact font.
 	if (!fontLoaded)
 	{
 		fontLoaded = font.loadFromFile("./assets/font.ttf");         // If Arial is not found, use the game's own font.
