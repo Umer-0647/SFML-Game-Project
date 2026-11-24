@@ -9,15 +9,6 @@ Menu::Menu() {
 	boardWidth = 10;
 	boardHeight = 10;
 }
-Menu::Menu(string options[], int size) {
-	selectedOption = -1;
-	selectedBoardSizeType = SelectedBoardSizeType::WIDTH;
-	for (int i = 0;i < size;i++) {
-		this->options.push_back(options[i]);
-	}
-	boardWidth = 10;
-	boardHeight = 10;
-}
 vector<string>Menu::getOptions()const {
 	return options;
 }
