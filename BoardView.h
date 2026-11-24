@@ -14,6 +14,10 @@ class BoardView
     Texture tilesTexture;//the tiles.png strip, loaded once in the constructor
     sf::SoundBuffer explosionBuffer;
     sf::Sound explosionSound;
+    std::string wonMessage;
+    std::string lostMessage;
+    std::string returnMessage;
+    void loadMessages();
     void displayWon();
     void displayLost();
     void displayBoard();
